@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.MobSpawnerLogic;
@@ -23,7 +24,7 @@ import net.minecraft.world.World;
 
 public class SpawnerKey extends Item {
 	
-	private static final Text TOOL_TIP = Text.translatable("tooltip.spawnermod.spawner_key_disabled").setStyle(Style.EMPTY.withColor(0xff0000));
+	private static final Text TOOL_TIP = new TranslatableText("tooltip.spawnermod.spawner_key_disabled").setStyle(Style.EMPTY.withColor(0xff0000));
 	
 	public SpawnerKey(Settings settings) {
 		super(settings);
@@ -69,6 +70,6 @@ public class SpawnerKey extends Item {
 	@Environment(EnvType.CLIENT)
 	private void openSpawnerGui(MobSpawnerLogic logic, BlockPos pos) {
 		MinecraftClient mc = MinecraftClient.getInstance();
-		mc.setScreen(new SpawnerConfigGui(Text.translatable(""), logic, pos));
+		mc.setScreen(new SpawnerConfigGui(new TranslatableText(""), logic, pos));
 	}
 }

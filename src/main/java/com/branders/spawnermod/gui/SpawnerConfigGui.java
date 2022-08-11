@@ -12,7 +12,9 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.MobSpawnerLogic;
@@ -29,7 +31,7 @@ import net.minecraft.world.MobSpawnerLogic;
 public class SpawnerConfigGui extends Screen {
 	
 	// "Spawner Config" title in yellow at the top
-	private static final Text titleText = Text.translatable("gui.spawnermod.spawner_config_screen_title");
+	private static final Text titleText = new TranslatableText("gui.spawnermod.spawner_config_screen_title");
 	
 	// Reference to spawner logic and NBT data. Set in constructor
 	private MobSpawnerLogic logic;
@@ -168,7 +170,7 @@ public class SpawnerConfigGui extends Screen {
 		 * 	Count button
 		 */
 		addDrawableChild(countButton = new ButtonWidget(
-				width / 2 - 48, 55, 108, 20, Text.translatable(
+				width / 2 - 48, 55, 108, 20, new TranslatableText(
 						"button.count." + getButtonText(countOptionValue)), button -> {
 			switch(countOptionValue) {
 				// Low, set to Default
@@ -200,7 +202,7 @@ public class SpawnerConfigGui extends Screen {
 					break;
 			}
 			
-			countButton.setMessage(Text.translatable("button.count." + getButtonText(countOptionValue)));
+			countButton.setMessage(new TranslatableText("button.count." + getButtonText(countOptionValue)));
 		}));
 		
 		
@@ -208,7 +210,7 @@ public class SpawnerConfigGui extends Screen {
 		 * 	Speed button
 		 */
 		addDrawableChild(speedButton = new ButtonWidget(
-				width / 2 - 48, 80, 108, 20, Text.translatable(
+				width / 2 - 48, 80, 108, 20, new TranslatableText(
 						"button.speed." + getButtonText(speedOptionValue)), button -> {
 			switch(speedOptionValue) {
 				// Slow, set to default
@@ -243,14 +245,14 @@ public class SpawnerConfigGui extends Screen {
 					maxSpawnDelay = _maxSpawnDelay.LOW;
 					break;
 			}
-			speedButton.setMessage(Text.translatable("button.speed." + getButtonText(speedOptionValue)));
+			speedButton.setMessage(new TranslatableText("button.speed." + getButtonText(speedOptionValue)));
 		}));
 		
 		/**
 		 * 	Range button
 		 */
 		addDrawableChild(rangeButton = new ButtonWidget(
-				width / 2 - 48, 105, 108, 20, Text.translatable(
+				width / 2 - 48, 105, 108, 20, new TranslatableText(
 						"button.range." + getButtonText(rangeOptionValue)).append(" " + requiredPlayerRange), button -> {
 			switch(rangeOptionValue) {
 				// Default, set to Far
@@ -289,14 +291,14 @@ public class SpawnerConfigGui extends Screen {
 					break;
 			}
 			
-			rangeButton.setMessage(Text.translatable("button.range." + getButtonText(rangeOptionValue)).append(" " + requiredPlayerRange));
+			rangeButton.setMessage(new TranslatableText("button.range." + getButtonText(rangeOptionValue)).append(" " + requiredPlayerRange));
 		}));
 		
 		/**
 		 * 	Disable button
 		 */
 		addDrawableChild(disableButton = new ButtonWidget(
-				width / 2 - 48, 130, 108, 20, Text.translatable(
+				width / 2 - 48, 130, 108, 20, new TranslatableText(
 						"button.toggle." + getButtonText(disabled)), button -> {
 			if(disabled) {
 				// Set spawner to ON
@@ -324,13 +326,13 @@ public class SpawnerConfigGui extends Screen {
 				requiredPlayerRange = 0;
 			}
 			
-			disableButton.setMessage(Text.translatable("button.toggle." + getButtonText(disabled)));
+			disableButton.setMessage(new TranslatableText("button.toggle." + getButtonText(disabled)));
 		}));
 		
 		/**
 		 * 	Save button - configures spawner data
 		 */
-		addDrawableChild(new ButtonWidget(width / 2 - 89, 180 + 10, 178, 20, Text.translatable("button.save"), button -> 
+		addDrawableChild(new ButtonWidget(width / 2 - 89, 180 + 10, 178, 20, new TranslatableText("button.save"), button -> 
 		{
 			configureSpawner();
 			this.close();
@@ -339,7 +341,7 @@ public class SpawnerConfigGui extends Screen {
 		/**
 		 * 	Cancel button
 		 */
-		addDrawableChild(new ButtonWidget(width / 2 - 89, 180 + 35, 178, 20, Text.translatable("button.cancel"), button -> 
+		addDrawableChild(new ButtonWidget(width / 2 - 89, 180 + 35, 178, 20, new TranslatableText("button.cancel"), button -> 
 		{
 			this.close();
 		}));
@@ -371,7 +373,7 @@ public class SpawnerConfigGui extends Screen {
 			RenderSystem.setShader(GameRenderer::getPositionTexShader);
 			RenderSystem.setShaderTexture(0, spawnsIconTexture);
 			drawTexture(matrices, width / 2 - 7 + 101, 23, 0, 0, 14, 14, 14, 14);
-			drawTextWithShadow(matrices, client.textRenderer, Text.literal("" + (ConfigValues.get("limited_spawns_amount") - spawns)), width / 2 + 114, 27, 0xFFFFFF);
+			drawTextWithShadow(matrices, client.textRenderer, new LiteralText("" + (ConfigValues.get("limited_spawns_amount") - spawns)), width / 2 + 114, 27, 0xFFFFFF);
 		}
 		
 		super.render(matrices, mouseX, mouseY, delta);
@@ -457,19 +459,19 @@ public class SpawnerConfigGui extends Screen {
 		
 		if(ConfigValues.get("disable_count") != 0) {
 			countButton.active = false;
-			countButton.setMessage(Text.translatable("button.count.disabled"));
+			countButton.setMessage(new TranslatableText("button.count.disabled"));
 		} else
 			countButton.active = state;
 		
 		if(ConfigValues.get("disable_speed") != 0) {
 			speedButton.active = false;
-			speedButton.setMessage(Text.translatable("button.speed.disabled"));
+			speedButton.setMessage(new TranslatableText("button.speed.disabled"));
 		} else
 			speedButton.active = state;
 		
 		if(ConfigValues.get("disable_range") != 0) {
 			rangeButton.active = false;
-			rangeButton.setMessage(Text.translatable("button.range.disabled"));
+			rangeButton.setMessage(new TranslatableText("button.range.disabled"));
 		} else 
 			rangeButton.active = state;
 	}
